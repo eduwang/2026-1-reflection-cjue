@@ -1,0 +1,1196 @@
+/* 🌐 전체 바디 및 HTML 설정 */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(to bottom right, #e0f7fa, #b3e5fc);
+  overflow-anchor: none;     /* 스크롤 자동 이동 방지 */
+  scroll-behavior: auto;
+}
+
+/* 📦 관리자 컨테이너 */
+.admin-container {
+  position: relative;
+  width: 95%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+/* 🟦 페이지 상단 제목 */
+.title, .header {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0288d1;
+  margin-top: 30px;
+  margin-bottom: 40px;
+}
+
+/* 📅 필터링 컨트롤 섹션 */
+.filter-controls {
+  margin: 20px 0 30px 0;
+  padding: 25px;
+  background-color: #f8fafc;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.filter-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+
+.filter-row:last-child {
+  margin-bottom: 0;
+}
+
+.filter-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.filter-group label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 600;
+  color: #374151;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* 날짜 선택 그룹 */
+.date-group {
+  flex: 2;
+}
+
+/* 피드백 표시 그룹 */
+.feedback-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.filter-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #d1d5db;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.filter-group select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.filter-group select:hover {
+  border-color: #9ca3af;
+}
+
+/* 피드백 표시 컨트롤 */
+.feedback-display-control {
+  margin-top: 0;
+  padding: 16px;
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  max-height: 180px; /* 날짜 체크박스 영역과 동일한 높이 */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  overflow-y: auto;
+}
+
+/* 📱 반응형 디자인 */
+@media (max-width: 768px) {
+  .filter-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .date-group {
+    flex: 1;
+  }
+  
+  .filter-controls {
+    padding: 20px;
+  }
+  
+  .admin-container {
+    padding: 20px;
+  }
+}
+
+/* 날짜 체크박스 영역 */
+.date-checkboxes {
+  display: flex;
+  flex-wrap: nowrap; /* 가로 스크롤을 위해 nowrap으로 변경 */
+  gap: 12px;
+  padding: 16px;
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  max-height: 180px; /* feedback-display-control과 동일한 높이 */
+  overflow-x: auto; /* 가로 스크롤 */
+  overflow-y: auto;
+}
+
+.date-checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  padding: 8px 12px;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  transition: all 0.2s ease;
+}
+
+.date-checkbox-item:hover {
+  border-color: #3b82f6;
+  background-color: #f0f9ff;
+}
+
+.date-checkbox-item input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.date-checkbox-item label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex: 1;
+  position: relative;
+}
+
+.date-checkbox-item .checkmark-small {
+  height: 16px;
+  width: 16px;
+  background-color: #ffffff;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.date-checkbox-item:hover .checkmark-small {
+  border-color: #3b82f6;
+}
+
+.date-checkbox-item input:checked ~ label .checkmark-small {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.date-checkbox-item .checkmark-small:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 4px;
+  top: 1px;
+  width: 3px;
+  height: 6px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.date-checkbox-item input:checked ~ label .checkmark-small:after {
+  display: block;
+}
+
+.date-checkbox-item .date-label {
+  user-select: none;
+  white-space: nowrap;
+}
+
+#user-select {
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* 📊 결과 표시 전체 컨테이너 */
+#results-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  min-height: auto; /* 내용이 없을 때는 자동 높이 */
+}
+
+/* 📥 다운로드 버튼 컨테이너 */
+.download-controls {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+/* 📥 다운로드 버튼 스타일 */
+.btn-download {
+  background-color: #10b981;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-download:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-download img {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+}
+
+.btn-download-csv {
+  background-color: #3b82f6;
+}
+
+.btn-download-csv:hover {
+  background-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* 🎛️ 시나리오 설정 */
+.control-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  background-color: #ffffffcc;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.current-scenario-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 200px;
+}
+
+.current-scenario-label {
+  font-weight: 600;
+  color: #374151;
+  font-size: 1rem;
+}
+
+.current-scenario-title {
+  font-weight: 500;
+  color: #0288d1;
+  font-size: 1.1rem;
+}
+
+.scenario-dropdown-wrapper {
+  flex: 1;
+  min-width: 200px;
+  max-width: 300px;
+}
+
+.scenario-dropdown {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #d1d5db;
+  border-radius: 10px;
+  background-color: white;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.scenario-dropdown:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.scenario-dropdown:hover {
+  border-color: #9ca3af;
+}
+
+.feedback-control {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  padding-right: 20px;
+  border-right: 1px solid #e5e7eb;
+}
+
+.btn-editor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 30px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  background-color: #616161;  /* 중간 회색 */
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.feedback-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #374151;
+  position: relative;
+}
+
+.feedback-checkbox input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  height: 22px;
+  width: 22px;
+  background-color: #ffffff;
+  border: 2px solid #d1d5db;
+  border-radius: 6px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.feedback-checkbox:hover .checkmark {
+  border-color: #3b82f6;
+}
+
+.feedback-checkbox input:checked ~ .checkmark {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 7px;
+  top: 3px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.feedback-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.label-text {
+  user-select: none;
+}
+
+/* 👤 각 사용자별 결과 박스 */
+.user-result {
+  background-color: #ffffffcc;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 👤 사용자 이름 */
+.user-name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #0288d1;
+  margin-bottom: 20px;
+}
+
+/* 🧩 각 페이지 결과를 2x2 형태로 배치 */
+.page-columns {
+  display: grid;
+  grid-template-areas:
+    "page2 page2"
+    "page1 page3";
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.page-box.page1 { grid-area: page1; }
+.page-box.page2 { grid-area: page2; }
+.page-box.page3 { grid-area: page3; }
+
+/* 📄 각 페이지별 내용 박스 */
+.page-box {
+  background-color: #f0faff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  min-height: 250px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* 🏷️ 페이지 제목 */
+.page-title {
+  font-weight: bold;
+  color: #03a9f4;
+  margin-bottom: 12px;
+}
+
+/* 👩‍🏫 교사 발화 강조 */
+.teacher-line {
+  background-color: #d2f0ff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  display: inline-block;
+  color: #007acc;
+}
+
+.scenario-editor {
+  margin-top: 40px;
+  padding: 30px;
+  background-color: #ffffffdd;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.scenario-editor textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.chat-input-section {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.chat-input-section input {
+  padding: 8px;
+  flex: 1;
+  border-radius: 6px;
+  border: 1px solid #aaa;
+}
+
+#starter-conversation-list p {
+  margin: 4px 0;
+}
+
+#scenario-title {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+#scenario-list button {
+  margin-bottom: 10px;
+}
+
+#scenario-select,
+#date-select {
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+/* 작은 피드백 체크박스 스타일 */
+.feedback-checkbox-small {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #374151;
+  position: relative;
+}
+
+.feedback-checkbox-small input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark-small {
+  height: 18px;
+  width: 18px;
+  background-color: #ffffff;
+  border: 2px solid #d1d5db;
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.feedback-checkbox-small:hover .checkmark-small {
+  border-color: #3b82f6;
+}
+
+.feedback-checkbox-small input:checked ~ .checkmark-small {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.checkmark-small:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.feedback-checkbox-small input:checked ~ .checkmark-small:after {
+  display: block;
+}
+
+.label-text-small {
+  user-select: none;
+}
+
+/* 날짜 선택 드롭다운 스타일 */
+.date-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.date-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 1px solid #e5e7eb;
+}
+
+.date-dropdown-content.show {
+  display: block;
+}
+
+.date-option {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s ease;
+}
+
+.date-option:last-child {
+  border-bottom: none;
+}
+
+.date-option:hover {
+  background-color: #f9fafb;
+}
+
+.date-option.selected {
+  background-color: #dbeafe;
+  color: #1e40af;
+  font-weight: 500;
+}
+
+/* 결과 카드 토글 스타일 */
+.result-card {
+  background-color: #ffffffcc;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e7eb;
+  width: calc(50% - 10px); /* 2열 배치를 위해 너비 설정 */
+  min-width: 400px; /* 최소 너비 설정 */
+  flex: 1 1 calc(50% - 10px); /* flex-grow, flex-shrink, flex-basis */
+  overflow: visible; /* 내용이 잘리지 않도록 */
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.result-title {
+  font-weight: 600;
+  color: #374151;
+  font-size: 1rem;
+}
+
+.result-toggle-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  color: #6b7280;
+}
+
+.result-content {
+  display: none;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #f3f4f6;
+}
+
+.result-content.show {
+  display: block;
+}
+
+/* 2열 레이아웃을 위한 컬럼 스타일 */
+.results-columns {
+  display: flex;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.results-column {
+  flex: 1;
+  min-width: 0;
+}
+
+.results-column h3 {
+  margin: 0;
+  padding: 8px 12px;
+  background: #f8fafc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  text-align: center;
+}
+
+/* 전체 화면 보기 버튼 스타일 */
+.btn-fullscreen {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  border: none !important;
+  padding: 6px 12px !important;
+  border-radius: 6px !important;
+  font-size: 0.85rem !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-fullscreen:hover {
+  background-color: #2563eb !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+/* 전체 화면 모달 스타일 */
+.fullscreen-modal-overlay {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fullscreen-modal-content {
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 대화문 테이블 스타일 (Handsontable 사용) */
+.conversation-table {
+  margin-bottom: 1rem;
+}
+
+/* Handsontable 스타일 */
+.saved-conversation-table {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.saved-conversation-table .ht_master .wtHolder {
+  overflow: visible;
+}
+
+/* 시나리오 제공 행 스타일 (연한 파란색 계열) - 더 명확하게 */
+.saved-conversation-table .scenario-provided,
+.saved-conversation-table tr:has(.scenario-provided) {
+  background-color: #eff6ff !important;
+}
+
+.saved-conversation-table .scenario-provided td {
+  background-color: #eff6ff !important;
+  border-left: 4px solid #3b82f6 !important;
+  border-top: 1px solid #bfdbfe !important;
+  border-bottom: 1px solid #bfdbfe !important;
+}
+
+.saved-conversation-table .scenario-provided td:first-child {
+  background-color: #dbeafe !important;
+  color: #1e40af !important;
+  font-weight: 700 !important;
+  border-left: 4px solid #2563eb !important;
+  border-right: 2px solid #93c5fd !important;
+}
+
+/* 사용자 입력 행 스타일 - 굵은 검정색 테두리로 구분 */
+.saved-conversation-table .user-entry,
+.saved-conversation-table .user-added-row,
+.saved-conversation-table tr:has(.user-entry),
+.saved-conversation-table tr:has(.user-added-row) {
+  border: 3px solid #000000 !important;
+  box-shadow: 0 0 0 1px #000000 !important;
+}
+
+.saved-conversation-table .user-entry td,
+.saved-conversation-table .user-added-row td {
+  border: 2px solid #000000 !important;
+}
+
+.saved-conversation-table .user-entry td:first-child,
+.saved-conversation-table .user-added-row td:first-child {
+  border: 2px solid #000000 !important;
+  font-weight: 600 !important;
+}
+
+/* 사용자 입력 행의 행 번호도 굵은 검정색 테두리 */
+.saved-conversation-table tr:has(.user-entry) th,
+.saved-conversation-table tr:has(.user-added-row) th {
+  border: 2px solid #000000 !important;
+  font-weight: 700 !important;
+}
+
+/* Potential 값에 따른 색상 - 글씨 색만 변경 (배경색은 행 스타일 유지) */
+.saved-conversation-table .potential-high,
+.saved-conversation-table td.potential-high,
+.saved-conversation-table .potential-high.htDimmed,
+.saved-conversation-table td.potential-high.htDimmed,
+.saved-conversation-table .potential-high.ht-readonly,
+.saved-conversation-table td.potential-high.ht-readonly {
+  color: #2563eb !important;
+  font-weight: 700 !important;
+}
+
+.saved-conversation-table .potential-low,
+.saved-conversation-table td.potential-low,
+.saved-conversation-table .potential-low.htDimmed,
+.saved-conversation-table td.potential-low.htDimmed,
+.saved-conversation-table .potential-low.ht-readonly,
+.saved-conversation-table td.potential-low.ht-readonly {
+  color: #dc2626 !important;
+  font-weight: 700 !important;
+}
+
+/* Potential 컬럼은 배경색을 덮어쓰되, 행 구분 테두리는 유지 */
+.saved-conversation-table .scenario-provided.potential-high,
+.saved-conversation-table .scenario-provided.potential-low {
+  border-left: 4px solid #3b82f6 !important;
+}
+
+.saved-conversation-table .user-entry.potential-high,
+.saved-conversation-table .user-added-row.potential-high,
+.saved-conversation-table .user-entry.potential-low,
+.saved-conversation-table .user-added-row.potential-low {
+  border-left: 4px solid #10b981 !important;
+}
+
+/* 피드백 스타일 */
+.feedback-preview {
+  background-color: #f0f9ff;
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.user-highlight {
+  background-color: #fff8dc;
+  /* border-left: solid #ffcc00; */
+  padding-top: 6px; 
+  padding-bottom: 6px; 
+  border-radius: 6px;
+  /* margin: 6px 0; */
+}
+
+/* 🌟 공통 버튼 스타일 */
+.btn {
+  background-color: #03a9f4;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin: 5px 4px;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #0288d1;
+}
+
+/* ❌ 삭제 버튼은 경고색으로 */
+.btn-delete {
+  background-color: #ffb7b1;
+}
+
+.btn-delete:hover {
+  background-color: #ffa7a7;
+}
+
+.nav-button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 12px;
+  text-decoration: none;
+  color: white;
+  background-color: #03a9f4;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.hidden {
+  display: none;
+}
+
+.btn-editor {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 30px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: white;
+  background-color: #616161;  /* 중간 회색 */
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 600px;
+}
+
+.btn-editor:hover {
+  background-color: #424242;  /* 진한 회색 */
+}
+
+.toggle-btn {
+  position: relative;
+}
+
+.btn-text {
+  flex: 1;
+  text-align: left;
+}
+
+.toggle-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  margin-left: 10px;
+}
+
+.toggle-btn.expanded .toggle-icon {
+  transform: rotate(180deg);
+}
+
+/* 📊 Handsontable 전역 라이트모드 스타일 */
+.handsontable,
+.handsontable *,
+.ht-root-wrapper,
+.ht-core {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+.handsontable th,
+.ht-core th {
+  background-color: #f3f4f6 !important;
+  color: #1f2937 !important;
+  border-color: #e5e7eb !important;
+}
+
+.handsontable td,
+.ht-core td {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #e5e7eb !important;
+}
+
+.handsontable .ht-row-headers th {
+  background-color: #f8fafc !important;
+  color: #6b7280 !important;
+  border-color: #e5e7eb !important;
+}
+
+.handsontable .ht-readonly,
+.handsontable .htDimmed {
+  background-color: #f9fafb !important;
+  color: #6b7280 !important;
+}
+
+.handsontable .ht-selection {
+  background-color: #dbeafe !important;
+}
+
+.handsontable .ht-selection td {
+  background-color: #dbeafe !important;
+}
+
+.handsontable .ht-input {
+  background-color: transparent !important;
+  color: #1f2937 !important;
+}
+
+.handsontable .ht-menu {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+.handsontable .ht-menu button,
+.handsontable .ht-menu a {
+  color: #1f2937 !important;
+}
+
+.handsontable .ht-menu button:hover,
+.handsontable .ht-menu a:hover {
+  background-color: #f3f4f6 !important;
+}
+
+/* 저장된 결과 테이블 라이트모드 강제 적용 - 최고 우선순위 */
+.saved-conversation-table,
+.saved-conversation-table .ht-root-wrapper,
+.saved-conversation-table .ht-core,
+.saved-conversation-table .ht_master {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+.saved-conversation-table .ht-core th,
+.saved-conversation-table .htCore th {
+  background-color: #f3f4f6 !important;
+  color: #374151 !important;
+  border-color: #e5e7eb !important;
+}
+
+.saved-conversation-table .ht-core td,
+.saved-conversation-table .htCore td {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-color: #e5e7eb !important;
+}
+
+.saved-conversation-table .ht-row-headers th {
+  background-color: #f8fafc !important;
+  color: #6b7280 !important;
+  border-color: #e5e7eb !important;
+}
+
+.saved-conversation-table .ht-readonly:not(.potential-high):not(.potential-low),
+.saved-conversation-table .htDimmed:not(.potential-high):not(.potential-low) {
+  background-color: #f9fafb !important;
+  color: #6b7280 !important;
+}
+
+.saved-conversation-table .ht-selection {
+  background-color: #dbeafe !important;
+}
+
+.saved-conversation-table .ht-selection td {
+  background-color: #dbeafe !important;
+}
+
+/* 저장된 결과 테이블 높이 자동 조정 */
+.saved-conversation-table {
+  height: auto !important;
+  min-height: 100px;
+}
+
+.saved-conversation-table .ht_master .wtHolder {
+  height: auto !important;
+  min-height: 100px;
+}
+
+.saved-conversation-table .ht_master .wtHider {
+  height: auto !important;
+}
+
+/* 📊 Handsontable 스타일 */
+#starter-conversation-table {
+  margin: 20px 0;
+  border-radius: 8px;
+  overflow: visible;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-height: 250px;
+  border: 1px solid #e5e7eb;
+  background: white;
+  width: 100%;
+}
+
+/* Handsontable 전체 컨테이너 */
+#starter-conversation-table .ht-root-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 테이블 자체 */
+#starter-conversation-table .ht-core {
+  width: 100% !important;
+  border-collapse: collapse;
+  border: 1px solid #e5e7eb;
+}
+
+/* 헤더 셀 */
+#starter-conversation-table .ht-core th {
+  background-color: #3b82f6 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  padding: 12px 8px !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+/* 데이터 셀 */
+#starter-conversation-table .ht-core td {
+  background-color: white !important;
+  padding: 8px !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+#starter-conversation-table .ht-core td:hover {
+  background-color: #f3f4f6 !important;
+}
+
+/* 행 번호 */
+#starter-conversation-table .ht-row-headers {
+  width: 50px !important;
+}
+
+#starter-conversation-table .ht-row-headers th {
+  background-color: #f8fafc !important;
+  color: #6b7280 !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+  border: 1px solid #e5e7eb !important;
+  padding: 8px 4px !important;
+}
+
+#starter-conversation-table .ht-row-headers th:hover {
+  background-color: #f1f5f9 !important;
+}
+
+/* 입력 필드 스타일 */
+#starter-conversation-table .ht-core input {
+  border: none !important;
+  background: transparent !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+}
+
+/* 테이블 컨트롤 버튼 */
+.table-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.table-controls button {
+  padding: 8px 16px;
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.table-controls button:hover {
+  background-color: #4b5563;
+}
+
+.table-controls button:active {
+  transform: translateY(1px);
+}
